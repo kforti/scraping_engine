@@ -170,10 +170,10 @@ def main():
                 "price": 4,
                 "description": 5}
 
-    dataset = LabelboxWebpageDataset("../product_images", "../data/export-2020-10-08T13_42_50.862Z.json", MASK_MAP,
+    dataset = LabelboxWebpageDataset("../data/product_images", "../data/labelbox-export.862Z.json", MASK_MAP,
                                      get_transform(True))
 
-    dataset_test = LabelboxWebpageDataset("../product_images", "../data/export-2020-10-08T13_42_50.862Z.json", MASK_MAP,
+    dataset_test = LabelboxWebpageDataset("../data/product_images", "../data/labelbox-export.862Z.json", MASK_MAP,
                                      get_transform(False))
 
     # split the dataset in train and test set
@@ -216,35 +216,19 @@ def main():
         # update the learning rate
         lr_scheduler.step()
         # evaluate on the test dataset
-        model.eval()
-        cpu_device = torch.device("cpu")
-    #model.to(cpu_device)
-        for images, targets in data_loader_test:
-            images = list(img.to(cpu_device) for img in images)
-            outputs = model(images)
-            print(outputs)
-            print(targets)
-            # res = evaluate(model, data_loader_test, device=device)
-            # print(res)
-    print("That's it!")
+
+        # Evaluation broken
+
+        # model.eval()
+        # cpu_device = torch.device("cpu")
+        # model.to(cpu_device)
+        # for images, targets in data_loader_test:
+        #     # images = list(img.to(cpu_device) for img in images)
+        #     # outputs = model(images)
+        #     # print(outputs)
+        #     # print(targets)
+        #     res = evaluate(model, data_loader_test, device=device)
+        #     print(res)
+
 
 main()
-dataset = PennFudanDataset('../PennFudanPed', get_transform(train=True))
-dataset[0]
-# MASK_MAP = {"title": 1,
-#             "rating": 2,
-#             "ratings": 3,
-#             "price": 4,
-#             "description": 5}
-# model = get_model_instance_segmentation(6)
-# dataset = LabelboxWebpageDataset("../product_images", "../data/export-2020-10-08T13_42_50.862Z.json", MASK_MAP, get_transform(True))
-#
-# data_loader = torch.utils.data.DataLoader(
-#  dataset, batch_size=2, shuffle=True, num_workers=4,
-#  collate_fn=utils.collate_fn)
-# # For Training
-# images, targets = next(iter(data_loader))
-# images = list(image for image in images)
-# targets = [{k: v for k, v in t.items()} for t in targets]
-# output = model(images,targets)
-# print(output)
