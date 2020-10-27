@@ -181,13 +181,13 @@ def main():
     dataset = torch.utils.data.Subset(dataset, indices[:-5])
     dataset_test = torch.utils.data.Subset(dataset_test, indices[-5:])
 
-    # define training and validation data loaders
+    # define training and validatio n data loaders
     data_loader = torch.utils.data.DataLoader(
-        dataset, batch_size=2, shuffle=True, num_workers=4,
+        dataset, batch_size=1, shuffle=True, num_workers=0,
         collate_fn=utils.collate_fn)
 
     data_loader_test = torch.utils.data.DataLoader(
-        dataset_test, batch_size=1, shuffle=False, num_workers=4,
+        dataset_test, batch_size=1, shuffle=False, num_workers=0,
         collate_fn=utils.collate_fn)
 
     # get the model using our helper function
@@ -218,8 +218,8 @@ def main():
         # evaluate on the test dataset
 
         # Evaluation broken
-
-        # model.eval()
+        if epoch == num_epochs - 1:
+            model.eval()
         # cpu_device = torch.device("cpu")
         # model.to(cpu_device)
         # for images, targets in data_loader_test:
@@ -227,8 +227,8 @@ def main():
         #     # outputs = model(images)
         #     # print(outputs)
         #     # print(targets)
-        #     res = evaluate(model, data_loader_test, device=device)
-        #     print(res)
+            evaluate(model, data_loader_test, device=device)
+
 
 
 main()
